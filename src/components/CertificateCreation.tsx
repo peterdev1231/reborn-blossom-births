@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Check, ArrowRight, Clock } from 'lucide-react';
+import { Check, ArrowRight, Clock, Shield, FileText, Paintbrush } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 
@@ -32,13 +32,13 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
     return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
 
-  // Steps in the animation process
+  // Steps in the animation process with corresponding icons
   const steps = [
-    { text: 'Verificando dados informados...', icon: 'check' },
-    { text: 'Gerando design personalizado...', icon: 'design' },
-    { text: 'Aplicando registros oficiais...', icon: 'document' },
-    { text: 'Adicionando elementos de segurança...', icon: 'security' },
-    { text: 'Finalizando sua certidão premium...', icon: 'certificate' },
+    { text: 'Verificando dados informados...', icon: <Check className="w-5 h-5" /> },
+    { text: 'Gerando design personalizado...', icon: <Paintbrush className="w-5 h-5" /> },
+    { text: 'Aplicando registros oficiais...', icon: <FileText className="w-5 h-5" /> },
+    { text: 'Adicionando elementos de segurança...', icon: <Shield className="w-5 h-5" /> },
+    { text: 'Finalizando sua certidão premium...', icon: <ArrowRight className="w-5 h-5" /> },
   ];
 
   // Animation to advance through steps and increase progress
@@ -73,22 +73,23 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
 
   return (
     <div className="relative animate-scale-in overflow-hidden rounded-3xl">
-      {/* Background with gradient animation */}
+      {/* Background with enhanced gradient animation */}
       <div className="absolute inset-0 bg-gradient-to-br from-babyblue-100 via-white to-babypink-100 animate-elegant-pulse"></div>
       
-      {/* Animated particles */}
+      {/* Animated particles with improved visibility */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(30)].map((_, i) => (
           <div 
             key={i}
-            className="absolute rounded-full bg-white/30 animate-elegant-float"
+            className="absolute rounded-full bg-white/50 backdrop-blur-sm animate-elegant-float shadow-md"
             style={{
-              width: `${Math.random() * 30 + 10}px`,
-              height: `${Math.random() * 30 + 10}px`,
+              width: `${Math.random() * 40 + 15}px`,
+              height: `${Math.random() * 40 + 15}px`,
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${Math.random() * 10 + 5}s`
+              animationDuration: `${Math.random() * 10 + 5}s`,
+              border: '1px solid rgba(255,255,255,0.8)'
             }}
           />
         ))}
@@ -96,13 +97,13 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
       
       <div className="relative z-10 p-8 md:p-12 bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-gradient-elegant">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-8 text-gradient-elegant animate-pulse">
             Criando Sua Certidão Premium
           </h2>
           
-          <div className="flex justify-center mb-10">
+          <div className="flex justify-center mb-12">
             <div className="relative w-48 h-48 md:w-64 md:h-64">
-              {/* Certificate mockup with animation */}
+              {/* Certificate mockup with enhanced animation */}
               <div className="absolute inset-0 p-3 animate-elegant-float" style={{ animationDuration: '10s' }}>
                 <AspectRatio ratio={1/1.4} className="rounded-lg border-8 border-cream-200 bg-white shadow-2xl overflow-hidden">
                   <div className="absolute inset-0 p-4 flex flex-col">
@@ -132,51 +133,72 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
             </div>
           </div>
           
-          {/* Steps progress */}
+          {/* Steps progress with improved visibility */}
           <div className="max-w-md mx-auto mb-8">
             {steps.map((stepItem, index) => (
-              <div key={index} className="mb-4">
-                <div className={`flex items-center ${step >= index ? 'opacity-100' : 'opacity-40'} transition-opacity duration-500`}>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+              <div key={index} className="mb-6 relative">
+                <div className={`flex items-center transition-all duration-500 ${
+                  step >= index ? 'opacity-100 scale-100' : 'opacity-50 scale-95'
+                }`}>
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ${
                     step > index 
-                      ? 'bg-gradient-to-r from-babypink-500 to-babypink-600 text-white'
+                      ? 'bg-gradient-to-r from-babypink-500 to-babypink-600 text-white shadow-lg shadow-babypink-500/30'
                       : step === index 
-                        ? 'bg-gradient-to-r from-babyblue-400 to-babyblue-600 text-white animate-pulse'
+                        ? 'bg-gradient-to-r from-babyblue-400 to-babyblue-600 text-white animate-pulse shadow-lg shadow-babyblue-500/30'
                         : 'bg-gray-200 text-gray-400'
                   }`}>
                     {step > index ? (
-                      <Check className="w-5 h-5" />
+                      <Check className="w-6 h-6" />
                     ) : (
-                      <div className="w-5 h-5 flex items-center justify-center">
-                        {index + 1}
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        {step === index ? steps[index].icon : index + 1}
                       </div>
                     )}
                   </div>
+                  
                   <div className="ml-4 flex-1">
-                    <p className={`text-sm font-medium ${step >= index ? 'text-gray-800' : 'text-gray-400'}`}>
+                    <p className={`text-sm md:text-base font-medium ${step >= index ? 'text-gray-800' : 'text-gray-400'}`}>
                       {stepItem.text}
                     </p>
                     {step === index && (
-                      <div className="mt-1 h-1 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-babyblue-400 to-babypink-400 animate-delicate-shimmer"></div>
+                      <div className="mt-2 h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-gradient-to-r from-babyblue-400 to-babypink-400"
+                          style={{
+                            width: `${Math.min(100, (progress % (100 / totalSteps)) * totalSteps)}%`,
+                            transition: 'width 0.3s ease-in-out',
+                            boxShadow: '0 0 10px rgba(255, 182, 193, 0.5)'
+                          }}
+                        ></div>
                       </div>
                     )}
                   </div>
                 </div>
+                
+                {/* Connect lines between steps */}
+                {index < steps.length - 1 && (
+                  <div className={`absolute left-6 top-12 w-0.5 h-8 transition-all duration-700 ${
+                    step > index ? 'bg-gradient-to-b from-babypink-500 to-babypink-300 opacity-100' : 'bg-gray-200 opacity-50'
+                  }`}></div>
+                )}
               </div>
             ))}
           </div>
           
-          {/* Overall progress bar */}
+          {/* Overall progress bar with improved visibility */}
           <div className="mb-6">
             <div className="flex justify-between text-sm mb-2">
-              <span className="text-gray-500">Progresso</span>
-              <span className="font-medium">{Math.round(progress)}%</span>
+              <span className="text-gray-600 font-medium">Progresso</span>
+              <span className="font-medium bg-gradient-to-r from-babypink-600 to-babyblue-600 bg-clip-text text-transparent">
+                {Math.round(progress)}%
+              </span>
             </div>
-            <Progress value={progress} className="h-2 bg-gray-100" />
+            <Progress value={progress} className="h-3 bg-gray-100 rounded-full overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-babypink-500 to-babyblue-500 opacity-20 animate-pulse"></div>
+            </Progress>
           </div>
           
-          <p className="text-gray-600 text-sm italic">
+          <p className="text-gray-600 text-sm italic animate-pulse">
             Por favor, aguarde enquanto preparamos sua certidão premium com carinho e atenção aos detalhes...
           </p>
         </div>

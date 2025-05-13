@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Check, Clock } from 'lucide-react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import CertificateCreation from './CertificateCreation';
+import { VisuallyHidden } from '@/components/ui/visually-hidden';
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -321,6 +321,12 @@ const FormSection = () => {
       {/* Certificate Creation Animation Dialog */}
       <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
         <DialogContent className="sm:max-w-4xl p-0 bg-transparent border-0 shadow-none overflow-hidden" onEscapeKeyDown={(e) => e.preventDefault()} onPointerDownOutside={(e) => e.preventDefault()}>
+          <VisuallyHidden>
+            <DialogTitle>Criando Sua Certidão Premium</DialogTitle>
+            <DialogDescription>
+              Processo de criação da sua certidão de nascimento premium personalizada
+            </DialogDescription>
+          </VisuallyHidden>
           <CertificateCreation 
             formData={formData} 
             onComplete={handleConfirmationClose} 
