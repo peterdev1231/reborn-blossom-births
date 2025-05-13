@@ -23,7 +23,6 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
   const [step, setStep] = useState(0);
   const animationDuration = 15; // seconds
   const totalSteps = 5;
-  const stepDuration = animationDuration / totalSteps;
   
   // Format date to display nicely
   const formatDate = (dateString: string) => {
@@ -43,21 +42,27 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
 
   // Animation to advance through steps and increase progress
   useEffect(() => {
-    // Overall progress animation
+    // Calculate timings
+    const stepDuration = animationDuration / totalSteps;
+    
+    // Progress animation (smoother update frequency)
     const progressInterval = setInterval(() => {
       setProgress(prev => {
-        const newProgress = prev + (100 / (animationDuration * 10));
+        const newProgress = prev + (100 / (animationDuration * 20)); // More frequent updates
         return newProgress > 100 ? 100 : newProgress;
       });
-    }, 100);
+    }, 50); // Update twice as often for smoother animation
 
-    // Step transition animation
-    const stepInterval = setInterval(() => {
-      setStep(prev => {
-        const newStep = prev + 1;
-        return newStep >= totalSteps ? totalSteps - 1 : newStep;
-      });
-    }, stepDuration * 1000);
+    // Step transition animation - using setTimeout for each step instead of setInterval
+    // This ensures each step is triggered at the right time
+    const stepTimeouts: NodeJS.Timeout[] = [];
+    
+    for (let i = 0; i < totalSteps; i++) {
+      const timeout = setTimeout(() => {
+        setStep(i);
+      }, i * stepDuration * 1000);
+      stepTimeouts.push(timeout);
+    }
 
     // Complete animation and close modal
     const completionTimeout = setTimeout(() => {
@@ -66,10 +71,10 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
 
     return () => {
       clearInterval(progressInterval);
-      clearInterval(stepInterval);
+      stepTimeouts.forEach(timeout => clearTimeout(timeout));
       clearTimeout(completionTimeout);
     };
-  }, [onComplete, animationDuration, stepDuration]);
+  }, [onComplete, animationDuration, totalSteps]);
 
   return (
     <div className="relative animate-scale-in overflow-hidden rounded-3xl">
@@ -117,7 +122,7 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
                         {formatDate(formData.birthDate) || "Data de Nascimento"}
                       </p>
                       <p className="text-sm text-gray-600">
-                        {formData.weight ? `${formData.weight}kg` : "Peso"} • {formData.height ? `${formData.height}cm` : "Altura"}
+                        {formData.weight ? `${formData.weight}` : "Peso"} • {formData.height ? `${formData.height}cm` : "Altura"}
                       </p>
                       <p className="text-sm text-gray-600 mt-2">
                         Mamãe: {formData.motherName || "Nome da Mãe"}
@@ -133,31 +138,35 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
             </div>
           </div>
           
-          {/* Steps progress with improved visibility */}
+          {/* Steps progress with improved visibility - now with vertical animation */}
           <div className="max-w-md mx-auto mb-8">
             {steps.map((stepItem, index) => (
               <div key={index} className="mb-6 relative">
-                <div className={`flex items-center transition-all duration-500 ${
-                  step >= index ? 'opacity-100 scale-100' : 'opacity-50 scale-95'
+                <div className={`flex items-center transition-all duration-700 ${
+                  step >= index 
+                    ? 'opacity-100 scale-100' 
+                    : 'opacity-40 scale-95 blur-[1px]'
                 }`}>
                   <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ${
                     step > index 
                       ? 'bg-gradient-to-r from-babypink-500 to-babypink-600 text-white shadow-lg shadow-babypink-500/30'
                       : step === index 
                         ? 'bg-gradient-to-r from-babyblue-400 to-babyblue-600 text-white animate-pulse shadow-lg shadow-babyblue-500/30'
-                        : 'bg-gray-200 text-gray-400'
+                        : 'bg-gray-200 text-gray-500'
                   }`}>
                     {step > index ? (
                       <Check className="w-6 h-6" />
                     ) : (
                       <div className="w-6 h-6 flex items-center justify-center">
-                        {step === index ? steps[index].icon : index + 1}
+                        {step === index ? stepItem.icon : index + 1}
                       </div>
                     )}
                   </div>
                   
                   <div className="ml-4 flex-1">
-                    <p className={`text-sm md:text-base font-medium ${step >= index ? 'text-gray-800' : 'text-gray-400'}`}>
+                    <p className={`text-sm md:text-base font-medium ${
+                      step >= index ? 'text-gray-800' : 'text-gray-500'
+                    }`}>
                       {stepItem.text}
                     </p>
                     {step === index && (
@@ -166,7 +175,7 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
                           className="h-full bg-gradient-to-r from-babyblue-400 to-babypink-400"
                           style={{
                             width: `${Math.min(100, (progress % (100 / totalSteps)) * totalSteps)}%`,
-                            transition: 'width 0.3s ease-in-out',
+                            transition: 'width 0.2s ease-out',
                             boxShadow: '0 0 10px rgba(255, 182, 193, 0.5)'
                           }}
                         ></div>
@@ -175,10 +184,12 @@ const CertificateCreation = ({ formData, onComplete }: CertificateCreationProps)
                   </div>
                 </div>
                 
-                {/* Connect lines between steps */}
+                {/* Connect lines between steps with animation */}
                 {index < steps.length - 1 && (
                   <div className={`absolute left-6 top-12 w-0.5 h-8 transition-all duration-700 ${
-                    step > index ? 'bg-gradient-to-b from-babypink-500 to-babypink-300 opacity-100' : 'bg-gray-200 opacity-50'
+                    step > index 
+                      ? 'bg-gradient-to-b from-babypink-500 to-babypink-300 opacity-100' 
+                      : 'bg-gray-200 opacity-50'
                   }`}></div>
                 )}
               </div>
