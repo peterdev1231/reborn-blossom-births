@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -128,4 +128,77 @@
   .certificate-mockup {
     @apply border-8 border-cream-200 rounded-md shadow-2xl bg-white p-10;
   }
+
+  /* Novas classes elegantes */
+  .glass-card {
+    @apply rounded-xl bg-white/80 backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl p-6 border border-white/20;
+  }
+  
+  .elegant-border {
+    @apply border-2 border-cream-100 rounded-lg p-0.5 bg-gradient-to-br from-babypink-100 via-white to-babyblue-100;
+  }
+  
+  .delicate-shadow {
+    @apply shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+  }
+  
+  .elegant-input {
+    @apply w-full py-4 px-5 bg-white/90 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-babypink-300 transition-all duration-300 shadow-inner;
+  }
+  
+  .elegant-button {
+    @apply relative overflow-hidden bg-gradient-to-r from-babypink-500 to-babypink-600 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transition-all duration-500 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-babypink-500 focus:ring-opacity-50 after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-white/20 after:scale-x-0 after:origin-right after:transition-transform after:duration-500 hover:after:scale-x-100 hover:after:origin-left;
+  }
+  
+  .floating-element {
+    @apply animate-float transition-all duration-500;
+  }
+  
+  .text-gradient-elegant {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-babypink-700 via-babypink-500 to-babyblue-600;
+  }
+  
+  .card-gradient-soft {
+    @apply bg-gradient-to-br from-white to-cream-50;
+  }
+}
+
+/* Novas animações */
+@keyframes elegant-fade-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes elegant-float {
+  0%, 100% { transform: translateY(0) rotate(1deg); }
+  50% { transform: translateY(-15px) rotate(-1deg); }
+}
+
+@keyframes elegant-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.98); }
+}
+
+@keyframes delicate-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Aplicando as animações */
+.animate-elegant-fade-in {
+  animation: elegant-fade-in 1s ease-out forwards;
+}
+
+.animate-elegant-float {
+  animation: elegant-float 8s infinite ease-in-out;
+}
+
+.animate-elegant-pulse {
+  animation: elegant-pulse 4s infinite ease-in-out;
+}
+
+.animate-delicate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: delicate-shimmer 2s infinite;
 }

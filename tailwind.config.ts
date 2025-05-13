@@ -100,6 +100,30 @@ export default {
 					800: '#8C6014',
 					900: '#6A4700',
 				},
+				gold: {
+					50: '#FFFBEA',
+					100: '#FFF6D5',
+					200: '#FFEAAA',
+					300: '#FFDA80',
+					400: '#FFC855',
+					500: '#FFB02A',
+					600: '#DB8D00',
+					700: '#B36D00',
+					800: '#8C5400',
+					900: '#663C00',
+				},
+				lavender: {
+					50: '#F6F3FF',
+					100: '#EDE9FE',
+					200: '#DDD6FE',
+					300: '#C4B5FD',
+					400: '#A78BFA',
+					500: '#8B5CF6',
+					600: '#7C3AED',
+					700: '#6D28D9',
+					800: '#5B21B6',
+					900: '#4C1D95',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -108,8 +132,9 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Nunito', 'sans-serif'],
-				display: ['Playfair Display', 'serif'],
+				display: ['Cormorant Garamond', 'Playfair Display', 'serif'],
 				script: ['Dancing Script', 'cursive'],
+				elegant: ['Cormorant Garamond', 'serif'],
 			},
 			keyframes: {
 				'accordion-down': {
@@ -137,8 +162,12 @@ export default {
 					'50%': { opacity: '0.8' }
 				},
 				'float': {
-					'0%, 100%': { transform: 'translateY(0)' },
-					'50%': { transform: 'translateY(-10px)' }
+					'0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+					'50%': { transform: 'translateY(-10px) rotate(1deg)' }
+				},
+				'shimmer': {
+					'0%': { backgroundPosition: '-200% center' },
+					'100%': { backgroundPosition: '200% center' }
 				}
 			},
 			animation: {
@@ -149,6 +178,18 @@ export default {
 				'slide-in': 'slide-in 0.8s ease-out',
 				'pulse-soft': 'pulse-soft 3s infinite ease-in-out',
 				'float': 'float 6s infinite ease-in-out',
+				'shimmer': 'shimmer 2s infinite linear'
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+				'gradient-elegant': 'linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)',
+				'gradient-soft-pink': 'linear-gradient(180deg, rgb(254,100,121) 0%, rgb(251,221,186) 100%)',
+				'gradient-shimmer': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)',
+			},
+			boxShadow: {
+				'elegant': '0 10px 30px -5px rgba(0, 0, 0, 0.05)',
+				'elegant-lg': '0 20px 40px -5px rgba(0, 0, 0, 0.05)',
+				'inner-elegant': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.03)'
 			}
 		}
 	},

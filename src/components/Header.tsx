@@ -25,14 +25,19 @@ const Header = () => {
   
   return (
     <header 
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        isScrolled 
+          ? 'bg-white/90 backdrop-blur-md shadow-elegant py-2' 
+          : 'bg-transparent py-4'
       }`}
     >
       <div className="container-custom flex justify-between items-center">
-        <div className="flex items-center">
-          <Heart className="text-babypink-500 mr-2" size={28} />
-          <span className="font-script text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-babypink-500 to-babyblue-500">
+        <div className="flex items-center group">
+          <div className="relative">
+            <Heart className="text-babypink-500 mr-2 transition-all duration-300 group-hover:text-babypink-600" size={28} />
+            <div className="absolute -inset-1 bg-babypink-100 rounded-full blur opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+          </div>
+          <span className="font-script text-2xl font-bold text-gradient-elegant transition-all duration-300">
             Bebê Reborn
           </span>
         </div>
@@ -43,47 +48,66 @@ const Header = () => {
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="link-underline font-medium text-gray-700 hover:text-babypink-500 transition-colors"
+              className="link-underline font-medium text-gray-700 hover:text-babypink-500 transition-colors duration-300"
             >
               {item}
             </a>
           ))}
-          <button className="btn-primary">
+          <button className="elegant-button">
             Garanta a Sua
           </button>
         </nav>
         
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-gray-700 focus:outline-none" 
+          className="md:hidden text-gray-700 focus:outline-none relative z-10" 
           onClick={toggleMobileMenu}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-          </svg>
+          <div className="relative w-6 h-6">
+            <span 
+              className={`absolute h-0.5 w-6 bg-current transform transition-all duration-300 ${
+                isMobileMenuOpen ? 'rotate-45 top-3' : 'rotate-0 top-1'
+              }`}
+            />
+            <span 
+              className={`absolute h-0.5 w-6 bg-current transform transition-all duration-300 ${
+                isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+              } top-3`}
+            />
+            <span 
+              className={`absolute h-0.5 w-6 bg-current transform transition-all duration-300 ${
+                isMobileMenuOpen ? '-rotate-45 top-3' : 'rotate-0 top-5'
+              }`}
+            />
+          </div>
         </button>
       </div>
       
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg absolute top-full left-0 w-full animate-fade-in">
-          <div className="container px-4 py-4 space-y-4">
-            {['Início', 'Sobre', 'Serviços', 'Contato'].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="block py-2 text-gray-700 hover:text-babypink-500 transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item}
-              </a>
-            ))}
-            <button className="btn-primary w-full">
-              Garanta a Sua
-            </button>
-          </div>
+      <div 
+        className={`md:hidden fixed inset-0 bg-white/90 backdrop-blur-md z-40 transform transition-all duration-500 ${
+          isMobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+        }`}
+      >
+        <div className="container px-4 py-16 h-full flex flex-col items-center justify-center space-y-8">
+          {['Início', 'Sobre', 'Serviços', 'Contato'].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              className="text-xl font-display text-gray-700 hover:text-babypink-500 transition-colors duration-300"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {item}
+            </a>
+          ))}
+          <button 
+            className="elegant-button mt-6"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Garanta a Sua
+          </button>
         </div>
-      )}
+      </div>
     </header>
   );
 };

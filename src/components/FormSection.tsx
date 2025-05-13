@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Check, Clock } from 'lucide-react';
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -59,220 +59,236 @@ const FormSection = () => {
   return (
     <section id="formulário" className="section bg-gradient-to-b from-cream-50 to-white">
       <div className="container-custom">
-        <div className="max-w-3xl mx-auto text-center mb-10 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">Solicite Sua Certidão Exclusiva</h2>
-          <p className="text-lg text-gray-700">
+        <div className="max-w-3xl mx-auto text-center mb-16 animate-elegant-fade-in">
+          <div className="inline-block mb-4">
+            <div className="px-4 py-1 bg-gradient-to-r from-babypink-100 to-babyblue-100 rounded-full text-babypink-600 text-sm font-medium">
+              Processo Simples
+            </div>
+          </div>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-elegant mb-6">Solicite Sua Certidão Exclusiva</h2>
+          <p className="text-lg text-gray-700 max-w-2xl mx-auto">
             Preencha o formulário abaixo para personalizar e receber sua certidão premium.
           </p>
         </div>
         
         <div className="max-w-3xl mx-auto">
-          <div className="card border-2 border-cream-100">
-            {/* Progress Steps */}
-            <div className="flex mb-8">
-              <div className="flex-1">
-                <div className={`w-10 h-10 mx-auto rounded-full flex items-center justify-center ${
-                  step >= 1 ? 'bg-babypink-500 text-white' : 'bg-gray-200 text-gray-500'
-                }`}>
-                  1
+          <div className="elegant-border p-1">
+            <div className="card border-0 bg-white/80 backdrop-blur-md shadow-none">
+              {/* Progress Steps */}
+              <div className="flex mb-12">
+                <div className="flex-1 relative">
+                  <div className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center ${
+                    step >= 1 
+                      ? 'bg-gradient-to-r from-babypink-500 to-babypink-600 text-white shadow-lg shadow-babypink-500/20' 
+                      : 'bg-gray-200 text-gray-500'
+                  }`}>
+                    {step > 1 ? <Check className="w-6 h-6" /> : 1}
+                  </div>
+                  <p className="text-center text-sm mt-3 font-medium">Dados do Bebê</p>
                 </div>
-                <p className="text-center text-sm mt-2">Dados do Bebê</p>
+                
+                <div className="flex-1 relative">
+                  <div className={`absolute top-6 w-full h-0.5 -left-1/2 right-1/2 ${
+                    step >= 2 ? 'bg-gradient-to-r from-babypink-400 to-babypink-600' : 'bg-gray-200'
+                  }`}></div>
+                  <div className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center transition-all duration-500 ${
+                    step >= 2 
+                      ? 'bg-gradient-to-r from-babypink-500 to-babypink-600 text-white scale-100 shadow-lg shadow-babypink-500/20' 
+                      : 'bg-gray-200 text-gray-500 scale-90'
+                  }`}>
+                    2
+                  </div>
+                  <p className="text-center text-sm mt-3 font-medium">Dados da Mãe</p>
+                </div>
               </div>
               
-              <div className="flex-1 relative">
-                <div className={`absolute top-5 w-full h-0.5 -left-1/2 right-1/2 ${
-                  step >= 2 ? 'bg-babypink-500' : 'bg-gray-200'
-                }`}></div>
-                <div className={`w-10 h-10 mx-auto rounded-full flex items-center justify-center ${
-                  step >= 2 ? 'bg-babypink-500 text-white' : 'bg-gray-200 text-gray-500'
-                }`}>
-                  2
+              {/* Urgency indicators */}
+              <div className="bg-gradient-to-r from-babypink-50 to-cream-50 rounded-lg p-6 mb-8 flex flex-col md:flex-row gap-6 justify-between shadow-inner-elegant">
+                <div className="flex items-center text-sm">
+                  <span className="inline-block w-3 h-3 bg-babypink-500 rounded-full animate-pulse mr-3"></span>
+                  <span className="font-medium">Apenas <span className="text-babypink-600 font-semibold">{availableCertificates}</span> certidões disponíveis este mês</span>
                 </div>
-                <p className="text-center text-sm mt-2">Dados da Mãe</p>
+                <div className="text-sm flex items-center">
+                  <Clock className="text-babyblue-500 mr-2 w-4 h-4" />
+                  <span className="font-medium mr-2">Oferta expira em: </span>
+                  <span className="font-mono bg-white text-babypink-800 px-3 py-1.5 rounded-md shadow-sm border border-babypink-100">
+                    {String(timeRemaining.minutes).padStart(2, '0')}:{String(timeRemaining.seconds).padStart(2, '0')}
+                  </span>
+                </div>
               </div>
-            </div>
-            
-            {/* Urgency indicators */}
-            <div className="bg-babypink-50 rounded-lg p-4 mb-6 flex flex-col md:flex-row gap-4 justify-between">
-              <div className="flex items-center text-sm">
-                <span className="inline-block w-3 h-3 bg-babypink-500 rounded-full animate-pulse mr-2"></span>
-                <span><strong>Apenas {availableCertificates}</strong> certidões disponíveis este mês</span>
-              </div>
-              <div className="text-sm">
-                <span className="font-semibold">Oferta expira em: </span>
-                <span className="font-mono bg-babypink-100 text-babypink-800 px-2 py-1 rounded">
-                  {String(timeRemaining.minutes).padStart(2, '0')}:{String(timeRemaining.seconds).padStart(2, '0')}
-                </span>
-              </div>
-            </div>
-            
-            {/* Form Steps */}
-            {step === 1 ? (
-              <form onSubmit={nextStep}>
-                <div className="space-y-4">
-                  <div>
-                    <label htmlFor="babyName" className="block text-sm font-medium text-gray-700 mb-1">
-                      Nome do Bebê*
-                    </label>
-                    <input
-                      type="text"
-                      id="babyName"
-                      name="babyName"
-                      required
-                      value={formData.babyName}
-                      onChange={handleInputChange}
-                      className="input-field"
-                      placeholder="Nome completo do bebê reborn"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700 mb-1">
-                      Data de Nascimento*
-                    </label>
-                    <input
-                      type="date"
-                      id="birthDate"
-                      name="birthDate"
-                      required
-                      value={formData.birthDate}
-                      onChange={handleInputChange}
-                      className="input-field"
-                    />
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
+              
+              {/* Form Steps */}
+              {step === 1 ? (
+                <form onSubmit={nextStep} className="animate-elegant-fade-in">
+                  <div className="space-y-6">
                     <div>
-                      <label htmlFor="weight" className="block text-sm font-medium text-gray-700 mb-1">
-                        Peso (kg)*
+                      <label htmlFor="babyName" className="block text-sm font-medium text-gray-700 mb-2">
+                        Nome do Bebê<span className="text-babypink-500">*</span>
                       </label>
                       <input
                         type="text"
-                        id="weight"
-                        name="weight"
+                        id="babyName"
+                        name="babyName"
                         required
-                        value={formData.weight}
+                        value={formData.babyName}
                         onChange={handleInputChange}
-                        className="input-field"
-                        placeholder="Ex: 3.2"
+                        className="elegant-input"
+                        placeholder="Nome completo do bebê reborn"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="height" className="block text-sm font-medium text-gray-700 mb-1">
-                        Altura (cm)*
+                      <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700 mb-2">
+                        Data de Nascimento<span className="text-babypink-500">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        id="birthDate"
+                        name="birthDate"
+                        required
+                        value={formData.birthDate}
+                        onChange={handleInputChange}
+                        className="elegant-input"
+                      />
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="weight" className="block text-sm font-medium text-gray-700 mb-2">
+                          Peso (kg)<span className="text-babypink-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="weight"
+                          name="weight"
+                          required
+                          value={formData.weight}
+                          onChange={handleInputChange}
+                          className="elegant-input"
+                          placeholder="Ex: 3.2"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="height" className="block text-sm font-medium text-gray-700 mb-2">
+                          Altura (cm)<span className="text-babypink-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="height"
+                          name="height"
+                          required
+                          value={formData.height}
+                          onChange={handleInputChange}
+                          className="elegant-input"
+                          placeholder="Ex: 49"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="pt-8">
+                      <button
+                        type="submit"
+                        className="elegant-button w-full flex items-center justify-center gap-2 group"
+                      >
+                        Próximo Passo 
+                        <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              ) : (
+                <form onSubmit={handleSubmit} className="animate-elegant-fade-in">
+                  <div className="space-y-6">
+                    <div>
+                      <label htmlFor="motherName" className="block text-sm font-medium text-gray-700 mb-2">
+                        Nome da Mãe<span className="text-babypink-500">*</span>
                       </label>
                       <input
                         type="text"
-                        id="height"
-                        name="height"
+                        id="motherName"
+                        name="motherName"
                         required
-                        value={formData.height}
+                        value={formData.motherName}
                         onChange={handleInputChange}
-                        className="input-field"
-                        placeholder="Ex: 49"
+                        className="elegant-input"
+                        placeholder="Seu nome completo"
                       />
                     </div>
-                  </div>
-                  
-                  <div className="pt-6">
-                    <button
-                      type="submit"
-                      className="btn-primary w-full flex items-center justify-center gap-2"
-                    >
-                      Próximo Passo <ArrowRight className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              </form>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="space-y-4">
-                  <div>
-                    <label htmlFor="motherName" className="block text-sm font-medium text-gray-700 mb-1">
-                      Nome da Mãe*
-                    </label>
-                    <input
-                      type="text"
-                      id="motherName"
-                      name="motherName"
-                      required
-                      value={formData.motherName}
-                      onChange={handleInputChange}
-                      className="input-field"
-                      placeholder="Seu nome completo"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      E-mail*
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="input-field"
-                      placeholder="Seu e-mail para envio da certidão"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                      Telefone*
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="input-field"
-                      placeholder="Seu telefone com DDD"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
-                      Endereço
-                    </label>
-                    <input
-                      type="text"
-                      id="address"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleInputChange}
-                      className="input-field"
-                      placeholder="Endereço completo (opcional)"
-                    />
-                  </div>
-                  
-                  <div className="pt-6 space-y-4">
-                    <button
-                      type="button"
-                      onClick={() => setStep(1)}
-                      className="w-full py-3 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Voltar
-                    </button>
                     
-                    <button
-                      type="submit"
-                      className="btn-primary w-full"
-                    >
-                      Solicitar Minha Certidão Agora
-                    </button>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                        E-mail<span className="text-babypink-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="elegant-input"
+                        placeholder="Seu e-mail para envio da certidão"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                        Telefone<span className="text-babypink-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        required
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="elegant-input"
+                        placeholder="Seu telefone com DDD"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
+                        Endereço
+                      </label>
+                      <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        className="elegant-input"
+                        placeholder="Endereço completo (opcional)"
+                      />
+                    </div>
+                    
+                    <div className="pt-8 space-y-4">
+                      <button
+                        type="button"
+                        onClick={() => setStep(1)}
+                        className="w-full py-3 px-4 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-300 font-medium"
+                      >
+                        Voltar
+                      </button>
+                      
+                      <button
+                        type="submit"
+                        className="elegant-button w-full"
+                      >
+                        Solicitar Minha Certidão Agora
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </form>
-            )}
-            
-            <div className="mt-6 text-center text-sm text-gray-500">
-              Suas informações estão seguras e não serão compartilhadas com terceiros.
+                </form>
+              )}
+              
+              <div className="mt-8 text-center text-sm text-gray-500 flex items-center justify-center">
+                <svg className="w-4 h-4 text-babypink-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                </svg>
+                Suas informações estão seguras e não serão compartilhadas com terceiros.
+              </div>
             </div>
           </div>
         </div>
