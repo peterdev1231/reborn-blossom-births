@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Check, Clock } from 'lucide-react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import CertificateCreation from './CertificateCreation';
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -16,6 +18,7 @@ const FormSection = () => {
   });
   const [availableCertificates, setAvailableCertificates] = useState(50);
   const [timeRemaining, setTimeRemaining] = useState({ minutes: 30, seconds: 0 });
+  const [showConfirmation, setShowConfirmation] = useState(false);
   
   // Update form data
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,15 +30,36 @@ const FormSection = () => {
   const nextStep = (e: React.FormEvent) => {
     e.preventDefault();
     setStep(2);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Prevent scrolling to top when changing steps
+    setTimeout(() => {
+      const formElement = document.getElementById('formulário');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
   
   // Submit form
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    // Here we would typically send the data to a server
-    alert('Formulário enviado com sucesso! Em breve você receberá sua certidão.');
+    setShowConfirmation(true);
+  };
+  
+  // Close confirmation and reset form
+  const handleConfirmationClose = () => {
+    setShowConfirmation(false);
+    setStep(1);
+    setFormData({
+      babyName: '',
+      birthDate: '',
+      weight: '',
+      height: '',
+      motherName: '',
+      email: '',
+      address: '',
+      phone: '',
+    });
   };
   
   // Countdown timer
@@ -293,6 +317,16 @@ const FormSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Certificate Creation Animation Dialog */}
+      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <DialogContent className="sm:max-w-4xl p-0 bg-transparent border-0 shadow-none overflow-hidden" onEscapeKeyDown={(e) => e.preventDefault()} onPointerDownOutside={(e) => e.preventDefault()}>
+          <CertificateCreation 
+            formData={formData} 
+            onComplete={handleConfirmationClose} 
+          />
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
